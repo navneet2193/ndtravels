@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const isAdmin = await isAdminAuthenticated();
+
   return (
     <header className="site-header">
       <div className="container header-inner">
@@ -15,7 +18,7 @@ export function SiteHeader() {
         <nav className="nav" aria-label="Primary">
           <Link href="/">Home</Link>
           <Link href="/blogs">Blogs</Link>
-          <Link href="/create">Create Blog</Link>
+          <Link href="/create">{isAdmin ? "Create Blog" : "Admin Login"}</Link>
         </nav>
       </div>
     </header>

@@ -2,9 +2,19 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "@/lib/supabase";
+import {
+  clearAdminSession,
+  createAdminSession,
+  isAdminAuthenticated,
+  verifyAdminCredentials
+} from "@/lib/admin-auth";
+import { createSupabaseAdminClient } from "@/lib/supabase";
 
 export type CreateBlogState = {
+  error: string;
+};
+
+export type AdminLoginState = {
   error: string;
 };
 
@@ -23,10 +33,53 @@ function parseListField(value: string) {
     .filter(Boolean);
 }
 
+export async function loginAdminAction(
+  _prevState: AdminLoginState,
+  formData: FormData
+): Promise<AdminLoginState> {
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "");
+
+  try {
+    if (!email || !password) {
+      return {
+        error: "Email and password are required."
+      };
+    }
+
+    const admin = await verifyAdminCredentials(email, password);
+
+    if (!admin?.id || !admin.email) {
+      return {
+        error: "Invalid admin credentials."
+      };
+    }
+
+    await createAdminSession(admin.id, admin.email);
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Admin sign-in is not configured."
+    };
+  }
+
+  redirect("/create");
+}
+
+export async function logoutAdminAction() {
+  await clearAdminSession();
+  redirect("/create");
+}
+
 export async function createBlogAction(
   _prevState: CreateBlogState,
   formData: FormData
 ): Promise<CreateBlogState> {
+  if (!(await isAdminAuthenticated())) {
+    return {
+      error: "Admin login required before publishing."
+    };
+  }
+
   const title = String(formData.get("title") || "").trim();
   const slugInput = String(formData.get("slug") || "").trim();
   const description = String(formData.get("description") || "").trim();
@@ -54,7 +107,7 @@ export async function createBlogAction(
   let supabase;
 
   try {
-    supabase = createSupabaseServerClient();
+    supabase = createSupabaseAdminClient();
   } catch (error) {
     return {
       error: error instanceof Error ? error.message : "Supabase is not configured."

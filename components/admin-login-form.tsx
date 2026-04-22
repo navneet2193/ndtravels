@@ -22,20 +22,30 @@ export function AdminLoginForm() {
   const [state, formAction] = useActionState(loginAdminAction, initialState);
 
   return (
-    <form className="form-card form-grid" action={formAction}>
-      <div className="field">
-        <label htmlFor="email">Admin Email</label>
-        <input id="email" name="email" type="email" placeholder="admin@example.com" required />
+    <div className="form-card auth-card">
+      <div className="auth-card-intro">
+        <p className="eyebrow">Secure Access</p>
+        <h2>Enter the editorial dashboard</h2>
+        <p className="helper-text">
+          Sign in with Supabase Auth. Access is granted only if your profile role is set to
+          `admin`.
+        </p>
       </div>
 
-      <div className="field">
-        <label htmlFor="password">Admin Password</label>
-        <input id="password" name="password" type="password" required />
-        <p className="helper-text">Sign in with Supabase Auth. Access is granted only if your profile role is admin.</p>
-      </div>
+      <form className="form-grid" action={formAction}>
+        <div className="field">
+          <label htmlFor="email">Admin Email</label>
+          <input id="email" name="email" type="email" placeholder="admin@example.com" required />
+        </div>
 
-      {state.error ? <p className="helper-text">{state.error}</p> : null}
-      <SubmitButton />
-    </form>
+        <div className="field">
+          <label htmlFor="password">Admin Password</label>
+          <input id="password" name="password" type="password" required />
+        </div>
+
+        {state.error ? <p className="helper-text helper-text-error">{state.error}</p> : null}
+        <SubmitButton />
+      </form>
+    </div>
   );
 }

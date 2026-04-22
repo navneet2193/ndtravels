@@ -1,13 +1,19 @@
 <svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="720" rx="36" fill="#F3E6D7"/>
-  <circle cx="952" cy="154" r="74" fill="#E39A61"/>
-  <path d="M0 540C94 478 171 453 280 465C384 476 443 550 551 550C660 550 737 449 844 425C978 394 1054 442 1200 358V720H0V540Z" fill="#6E9F9A"/>
-  <path d="M0 581C110 530 196 510 310 526C434 544 523 624 639 624C747 624 835 546 936 528C1033 510 1110 536 1200 482V720H0V581Z" fill="#2D5B66"/>
-  <path d="M279 253L413 130L510 232L645 90L821 253H279Z" fill="#FFF8EF"/>
-  <text x="96" y="118" fill="#A24E2D" font-family="Georgia, serif" font-size="52" font-weight="700">
+  <rect width="1200" height="720" rx="40" fill="#0F2730"/>
+  <circle cx="920" cy="140" r="86" fill="#F1C27D"/>
+  <path d="M0 124C130 92 222 88 336 116C438 141 503 201 599 201C704 201 769 131 880 118C1017 102 1106 147 1200 176V0H0V124Z" fill="#173A45"/>
+  <path d="M0 470C150 390 267 378 396 418C507 452 585 539 703 539C820 539 905 454 1021 438C1101 428 1163 444 1200 456V720H0V470Z" fill="#5E7C74"/>
+  <path d="M0 560C95 520 183 516 283 544C382 572 464 640 569 640C693 640 761 566 870 536C1010 497 1097 516 1200 558V720H0V560Z" fill="#1E4A56"/>
+  <path d="M186 328L314 214L423 320L553 180L739 328H186Z" fill="#F7F0E4"/>
+  <path d="M387 328L532 236L655 328H387Z" fill="#E6D7BF"/>
+  <text x="84" y="114" fill="#F7F0E4" font-family="Georgia, serif" font-size="56" font-weight="700">
     ND Travels
   </text>
-  <text x="96" y="176" fill="#4E5D6C" font-family="Arial, sans-serif" font-size="28">
-    Add an image URL to replace this travel placeholder.
+  <text x="84" y="172" fill="#C9D2D0" font-family="Arial, sans-serif" font-size="28">
+    Add a destination image URL to replace this editorial placeholder.
+  </text>
+  <rect x="82" y="510" width="248" height="72" rx="18" fill="rgba(247,240,228,0.12)"/>
+  <text x="116" y="555" fill="#F7F0E4" font-family="Arial, sans-serif" font-size="28">
+    Story cover preview
   </text>
 </svg>

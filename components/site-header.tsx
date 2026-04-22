@@ -11,7 +11,7 @@ export async function SiteHeader() {
           <span className="brand-mark">N</span>
           <span className="brand-label">
             <span className="brand-title">ND Travels</span>
-            <span className="brand-subtitle">Next.js travel journal</span>
+            <span className="brand-subtitle">Editorial travel stories with modern routes</span>
           </span>
         </Link>
 

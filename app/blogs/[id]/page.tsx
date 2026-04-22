@@ -41,32 +41,90 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   }
 
   return (
-    <article className="section">
-      <div className="container article-shell">
-        <div className="article-header">
-          <p className="eyebrow">Travel Story</p>
-          <h1>{blog.title}</h1>
-          <p className="article-meta">Published {formatBlogDate(blog.created_at)}</p>
-          <p className="article-excerpt">{blog.excerpt}</p>
+    <article className="section article-section">
+      <div className="container article-layout">
+        <div className="article-shell">
+          <div className="article-header">
+            <p className="eyebrow">{blog.category || "Travel Story"}</p>
+            <h1>{blog.title}</h1>
+            <p className="article-excerpt">{blog.description || blog.excerpt}</p>
+
+            <div className="article-meta-row">
+              <span>Published {formatBlogDate(blog.created_at)}</span>
+              <span>{blog.location || "Destination note"}</span>
+              <span>{blog.date ? formatBlogDate(blog.date) : "Flexible schedule"}</span>
+            </div>
+
+            {blog.tags.length > 0 ? (
+              <div className="article-tags">
+                {blog.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          <div className="article-image-wrap">
+            <Image
+              src={blog.image_url || "/placeholder.svg"}
+              alt={blog.title}
+              fill
+              priority
+              className="article-image"
+              sizes="(max-width: 768px) 100vw, 900px"
+            />
+          </div>
+
+          <div className="article-content">
+            {blog.content.split("\n").map((paragraph, index) =>
+              paragraph.trim() ? <p key={`${blog.id}-${index}`}>{paragraph}</p> : null
+            )}
+          </div>
         </div>
 
-        <div className="article-image-wrap">
-          <Image
-            src={blog.image_url || "/placeholder.svg"}
-            alt={blog.title}
-            fill
-            priority
-            className="article-image"
-            sizes="(max-width: 768px) 100vw, 900px"
-          />
-        </div>
+        <aside className="article-aside">
+          <div className="article-side-card">
+            <p className="eyebrow">Story Snapshot</p>
+            <ul className="article-facts">
+              <li>
+                <strong>Location</strong>
+                <span>{blog.location || "Not specified"}</span>
+              </li>
+              <li>
+                <strong>Category</strong>
+                <span>{blog.category || "Travel feature"}</span>
+              </li>
+              <li>
+                <strong>Published</strong>
+                <span>{formatBlogDate(blog.created_at)}</span>
+              </li>
+            </ul>
+          </div>
 
-        <div className="article-content">
-          {blog.content.split("\n").map((paragraph, index) =>
-            paragraph.trim() ? <p key={`${blog.id}-${index}`}>{paragraph}</p> : null
-          )}
-        </div>
+          <div className="article-side-card article-side-card-accent">
+            <p className="eyebrow">Editorial Note</p>
+            <p>
+              {blog.seo_description ||
+                "This story blends location texture, memorable moments, and practical cues to help readers imagine the trip clearly."}
+            </p>
+          </div>
+        </aside>
       </div>
+      {blog.images.length > 0 ? (
+        <div className="container gallery-strip">
+          {blog.images.slice(0, 3).map((image, index) => (
+            <div className="gallery-item" key={`${blog.id}-gallery-${index}`}>
+              <Image
+                src={image}
+                alt={`${blog.title} gallery image ${index + 1}`}
+                fill
+                className="article-image"
+                sizes="(max-width: 960px) 100vw, 33vw"
+              />
+            </div>
+          ))}
+        </div>
+      ) : null}
     </article>
   );
 }

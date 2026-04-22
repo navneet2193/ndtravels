@@ -3,11 +3,11 @@ import Link from "next/link";
 export default function BlogNotFound() {
   return (
     <section className="section">
-      <div className="container empty-state">
+      <div className="container empty-state empty-state-large">
         <h1>Story not found</h1>
-        <p>The blog you requested does not exist or may have been removed.</p>
+        <p>The route you requested is unavailable, unpublished, or may have moved elsewhere in the archive.</p>
         <Link className="button button-primary" href="/blogs">
-          Back to blogs
+          Return to archive
         </Link>
       </div>
     </section>

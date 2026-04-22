@@ -215,6 +215,7 @@ p {
 .hero-copy-shell {
   display: grid;
   gap: 1.4rem;
+  animation: fade-up 0.9s ease both;
 }
 
 .hero-copy,
@@ -289,6 +290,112 @@ p {
   min-height: 100%;
 }
 
+.hero-visual-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-image-stage {
+  position: relative;
+  min-height: 540px;
+  padding: 1.25rem;
+  border-radius: 36px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 242, 0.86), rgba(246, 237, 224, 0.92)),
+    radial-gradient(circle at top left, rgba(199, 107, 62, 0.18), transparent 36%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: fade-up 1s ease 0.12s both;
+}
+
+.hero-image-stage::before {
+  content: "";
+  position: absolute;
+  inset: 12% -10% auto auto;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: rgba(47, 91, 99, 0.08);
+  filter: blur(2px);
+}
+
+.hero-image-card {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 26px 55px rgba(43, 37, 28, 0.18);
+}
+
+.hero-image-card::after,
+.discovery-card-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(12, 27, 35, 0.18));
+  pointer-events: none;
+}
+
+.hero-image-card-primary {
+  inset: 1.25rem 5.75rem 7.75rem 1.25rem;
+  transform: rotate(-3deg);
+  animation: float-card 8s ease-in-out infinite;
+}
+
+.hero-image-card-secondary {
+  width: 44%;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  top: 14rem;
+  transform: rotate(7deg);
+  animation: float-card-secondary 9s ease-in-out infinite;
+}
+
+.hero-stage-image,
+.discovery-image {
+  object-fit: cover;
+}
+
+.hero-badge {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 180px;
+  padding: 0.95rem 1rem;
+  border-radius: 20px;
+  background: rgba(255, 250, 242, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 16px 32px rgba(43, 37, 28, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.hero-badge span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-badge strong {
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.hero-badge-top {
+  top: 1.2rem;
+  right: 1.25rem;
+  animation: fade-up 0.8s ease 0.32s both;
+}
+
+.hero-badge-bottom {
+  left: 1rem;
+  bottom: 1.6rem;
+  animation: fade-up 0.8s ease 0.45s both;
+}
+
 .hero-feature-frame {
   position: relative;
   min-height: 100%;
@@ -298,6 +405,10 @@ p {
     linear-gradient(180deg, rgba(13, 38, 45, 0.92), rgba(24, 59, 69, 0.92)),
     radial-gradient(circle at top right, rgba(240, 178, 111, 0.18), transparent 30%);
   color: #f9f5ec;
+}
+
+.hero-feature-card {
+  animation: fade-up 0.9s ease 0.22s both;
 }
 
 .hero-feature-frame::after {
@@ -353,7 +464,9 @@ p {
 
 .hero-metrics,
 .editorial-strip-grid,
-.create-highlights {
+.create-highlights,
+.discovery-band,
+.journey-grid {
   display: grid;
   gap: 1rem;
 }
@@ -392,6 +505,162 @@ p {
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: 1.4rem;
   align-items: start;
+}
+
+.photo-essay {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.essay-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 1.2rem;
+  align-items: stretch;
+}
+
+.essay-main,
+.essay-side,
+.journey-frame {
+  display: grid;
+  gap: 1rem;
+}
+
+.essay-side {
+  align-content: start;
+}
+
+.essay-image-wrap,
+.journey-frame-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.essay-image-wrap::after,
+.journey-frame-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(11, 27, 34, 0.24));
+  pointer-events: none;
+}
+
+.essay-image-wrap-large {
+  min-height: 480px;
+  animation: fade-up 0.9s ease 0.08s both;
+}
+
+.essay-image-wrap-small {
+  min-height: 240px;
+  animation: fade-up 0.9s ease 0.16s both;
+}
+
+.essay-image,
+.journey-image {
+  object-fit: cover;
+}
+
+.essay-caption,
+.photo-note-card,
+.journey-frame-copy {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
+}
+
+.essay-caption {
+  padding: 1.5rem;
+  animation: fade-up 0.9s ease 0.18s both;
+}
+
+.photo-note-card {
+  padding: 1.15rem 1.2rem;
+  animation: fade-up 0.9s ease both;
+}
+
+.photo-note-card:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.photo-note-card p,
+.journey-frame-copy p {
+  margin: 0.35rem 0 0;
+  color: var(--muted-strong);
+}
+
+.journey-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.journey-frame {
+  animation: fade-up 0.9s ease both;
+}
+
+.journey-frame:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.journey-frame:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+.journey-frame-image {
+  aspect-ratio: 4 / 3;
+}
+
+.journey-frame-copy {
+  padding: 1rem 1.05rem;
+}
+
+.discovery-band {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0.5rem;
+}
+
+.discovery-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 250, 242, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+  animation: fade-up 0.85s ease both;
+}
+
+.discovery-card:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.discovery-card:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+.discovery-card-image {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border-radius: 22px;
+}
+
+.discovery-card-copy {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0 0.25rem 0.15rem;
+}
+
+.discovery-card-copy strong {
+  font-size: 1.08rem;
+}
+
+.discovery-card-copy p,
+.editorial-note p {
+  margin: 0;
 }
 
 .editorial-strip-grid {
@@ -816,11 +1085,57 @@ p {
   text-align: right;
 }
 
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-card {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(-1.5deg);
+  }
+}
+
+@keyframes float-card-secondary {
+  0%,
+  100% {
+    transform: translateY(0) rotate(7deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(5.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @media (max-width: 1100px) {
   .hero-grid-home,
   .create-layout,
   .article-layout,
-  .editorial-strip {
+  .editorial-strip,
+  .essay-layout {
     grid-template-columns: 1fr;
   }
 
@@ -836,7 +1151,9 @@ p {
 
   .card-grid,
   .gallery-strip,
-  .editorial-strip-grid {
+  .editorial-strip-grid,
+  .discovery-band,
+  .journey-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -848,7 +1165,9 @@ p {
   .form-two-column,
   .card-grid,
   .gallery-strip,
-  .editorial-strip-grid {
+  .editorial-strip-grid,
+  .discovery-band,
+  .journey-grid {
     grid-template-columns: 1fr;
   }
 
@@ -870,6 +1189,25 @@ p {
 
   .footer-links {
     text-align: left;
+  }
+
+  .hero-image-stage {
+    min-height: 480px;
+  }
+
+  .essay-image-wrap-large {
+    min-height: 380px;
+  }
+
+  .hero-image-card-primary {
+    inset: 1rem 4rem 8.5rem 1rem;
+  }
+
+  .hero-image-card-secondary {
+    width: 46%;
+    top: 14.5rem;
+    right: 1rem;
+    bottom: 1rem;
   }
 }
 
@@ -902,6 +1240,50 @@ p {
     padding-left: 0;
   }
 
+  .hero-image-stage {
+    min-height: 420px;
+    padding: 0.85rem;
+    border-radius: 28px;
+  }
+
+  .hero-image-card {
+    border-radius: 22px;
+  }
+
+  .hero-image-card-primary {
+    inset: 0.85rem 2rem 8rem 0.85rem;
+  }
+
+  .hero-image-card-secondary {
+    width: 48%;
+    top: auto;
+    bottom: 0.9rem;
+    right: 0.85rem;
+    height: 42%;
+  }
+
+  .hero-badge {
+    min-width: 0;
+    max-width: 12.5rem;
+    padding: 0.8rem 0.85rem;
+    border-radius: 18px;
+  }
+
+  .hero-badge-top {
+    top: 0.85rem;
+    right: 0.85rem;
+  }
+
+  .hero-badge-bottom {
+    left: 0.85rem;
+    bottom: 0.85rem;
+  }
+
+  .essay-caption,
+  .journey-frame-copy {
+    padding: 1rem;
+  }
+
   .hero-feature-frame,
   .create-intro-card,
   .auth-card,
@@ -912,7 +1294,11 @@ p {
   .editorial-note,
   .highlight-card,
   .metric-card,
-  .empty-state {
+  .empty-state,
+  .discovery-card,
+  .essay-caption,
+  .photo-note-card,
+  .journey-frame-copy {
     border-radius: 22px;
   }
 

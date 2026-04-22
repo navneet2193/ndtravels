@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { BlogCard } from "@/components/blog-card";
 import { getFeaturedBlogs } from "@/lib/blogs";
@@ -7,6 +8,48 @@ export const metadata: Metadata = {
   title: "Home",
   description: "Explore featured travel journals and destination highlights from ND Travels."
 };
+
+const destinationShowcase = [
+  {
+    title: "Coastal escapes",
+    description: "Salt-air mornings, slow harbors, and dramatic blue horizons for reflective travel days.",
+    image: "/home-images/coast-aerial.jpg",
+    alt: "Real coastal travel photograph with cliffs, sea, and shoreline"
+  },
+  {
+    title: "Mountain routes",
+    description: "Layered ridgelines, alpine light, and winding roads that reward every early start.",
+    image: "/home-images/mountain-road.jpg",
+    alt: "Real mountain road photograph with dramatic peaks and clouds"
+  },
+  {
+    title: "City wandering",
+    description: "Laneways, landmarks, and evening glow for travelers who like culture with momentum.",
+    image: "/home-images/city-skyline.jpg",
+    alt: "Real city skyline photograph with waterfront and tall buildings"
+  }
+];
+
+const journeyFrames = [
+  {
+    title: "Harbor arrivals",
+    image: "/home-images/harbor-city.jpg",
+    alt: "Harbor city skyline at dusk",
+    note: "Best for reflective city entries and twilight arrival stories."
+  },
+  {
+    title: "Open-road climbs",
+    image: "/home-images/mountain-aerial-road.jpg",
+    alt: "Aerial view of a winding mountain road",
+    note: "Works well for route breakdowns, driving guides, and high-altitude escapes."
+  },
+  {
+    title: "Wide coastlines",
+    image: "/home-images/coast-hero.jpg",
+    alt: "Wide coastal landscape with cliffs and water",
+    note: "Ideal when the story is about atmosphere, calm, and dramatic edges."
+  }
+];
 
 export default async function HomePage() {
   const featuredBlogs = await getFeaturedBlogs(3);
@@ -18,10 +61,10 @@ export default async function HomePage() {
         <div className="container hero-grid hero-grid-home">
           <div className="hero-copy-shell">
             <p className="eyebrow">Independent Travel Journal</p>
-            <h1>Stories, routes, and destination notes designed like a magazine.</h1>
+            <h1>Travel stories that feel cinematic before the trip even begins.</h1>
             <p className="hero-copy">
-              ND Travels curates immersive place writing with practical detail, strong imagery,
-              and editorial rhythm so every trip idea feels tangible before departure.
+              ND Travels brings together destination atmosphere, practical route ideas, and
+              editorial storytelling in one warm, modern reading experience.
             </p>
             <div className="hero-actions">
               <Link className="button button-primary" href="/blogs">
@@ -48,13 +91,43 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="hero-feature-panel">
-            <div className="hero-feature-frame">
-              <p className="eyebrow">Editor&apos;s Window</p>
+          <div className="hero-visual-shell">
+            <div className="hero-image-stage">
+              <div className="hero-image-card hero-image-card-primary">
+                <Image
+                  src="/home-images/coast-hero.jpg"
+                  alt="Real travel photograph showing a coastline with cliffs and waves"
+                  fill
+                  priority
+                  className="hero-stage-image"
+                  sizes="(max-width: 960px) 100vw, 40vw"
+                />
+              </div>
+              <div className="hero-image-card hero-image-card-secondary">
+                <Image
+                  src="/home-images/mountain-road.jpg"
+                  alt="Real travel photograph showing a winding road through the mountains"
+                  fill
+                  className="hero-stage-image"
+                  sizes="(max-width: 960px) 50vw, 20vw"
+                />
+              </div>
+              <div className="hero-badge hero-badge-top">
+                <span>New routes weekly</span>
+                <strong>{featuredBlogs.length || 3} curated story picks</strong>
+              </div>
+              <div className="hero-badge hero-badge-bottom">
+                <span>Travel mood</span>
+                <strong>Warm, immersive, destination-first</strong>
+              </div>
+            </div>
+
+            <div className="hero-feature-frame hero-feature-card">
+              <p className="eyebrow">Featured Now</p>
               <h2>{heroBlog?.title || "Build a destination story worth lingering on."}</h2>
               <p>
                 {heroBlog?.description ||
-                  "Use the home page to set the tone, invite discovery, and spotlight the strongest journey in your collection."}
+                  "Spotlight journeys with strong atmosphere, practical notes, and a point of view that keeps readers exploring."}
               </p>
               <div className="hero-feature-pills">
                 <span>{heroBlog?.location || "Coastal routes"}</span>
@@ -70,24 +143,117 @@ export default async function HomePage() {
       </section>
 
       <section className="section section-tight">
+        <div className="container discovery-band">
+          {destinationShowcase.map((item) => (
+            <article key={item.title} className="discovery-card">
+              <div className="discovery-card-image">
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  fill
+                  className="discovery-image"
+                  sizes="(max-width: 960px) 100vw, 33vw"
+                />
+              </div>
+              <div className="discovery-card-copy">
+                <strong>{item.title}</strong>
+                <p>{item.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section section-tight">
         <div className="container editorial-strip">
           <div>
             <p className="eyebrow">Why It Works</p>
-            <h2>Clean editorial structure meets practical travel detail.</h2>
+            <h2>Polished travel storytelling with motion, mood, and clear navigation.</h2>
           </div>
           <div className="editorial-strip-grid">
             <article className="editorial-note">
-              <strong>Visual hierarchy</strong>
-              <p>Hero storytelling, refined cards, and spacious article pages keep the reading flow calm.</p>
+              <strong>Editorial rhythm</strong>
+              <p>Bold hero framing, layered imagery, and breathing room make the page feel deliberate.</p>
             </article>
             <article className="editorial-note">
-              <strong>Structured metadata</strong>
-              <p>Locations, categories, tags, and dates give every blog a stronger sense of place.</p>
+              <strong>Destination mood</strong>
+              <p>Travel-focused visuals help the archive feel inspiring before readers even open a story.</p>
             </article>
             <article className="editorial-note">
-              <strong>Admin-led publishing</strong>
-              <p>Only approved editors can access the publishing flow and add new stories.</p>
+              <strong>Calm movement</strong>
+              <p>Subtle reveal and floating animations add energy without making the page feel busy.</p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container photo-essay">
+          <div className="essay-layout">
+            <article className="essay-main">
+              <div className="essay-image-wrap essay-image-wrap-large">
+                <Image
+                  src="/home-images/mountain-aerial-road.jpg"
+                  alt="Aerial travel photograph of a winding mountain road"
+                  fill
+                  className="essay-image"
+                  sizes="(max-width: 1100px) 100vw, 48vw"
+                />
+              </div>
+              <div className="essay-caption">
+                <p className="eyebrow">On The Move</p>
+                <h2>Pair destination mood with route context, not just a pretty cover image.</h2>
+                <p className="section-copy">
+                  Great travel pages feel grounded when the photography shows how the journey
+                  unfolds: the road in, the coastline on arrival, and the city lights that close the day.
+                </p>
+              </div>
+            </article>
+
+            <div className="essay-side">
+              <article className="essay-side-card photo-note-card">
+                <strong>Professional motion</strong>
+                <p>
+                  The floating hero cards suggest movement between destinations, while staggered
+                  reveals guide the eye down the page.
+                </p>
+              </article>
+              <article className="essay-side-card photo-note-card">
+                <strong>Visual context</strong>
+                <p>
+                  Each image block now supports a travel idea: coast, road, skyline, and arrival.
+                </p>
+              </article>
+              <div className="essay-image-wrap essay-image-wrap-small">
+                <Image
+                  src="/home-images/harbor-city.jpg"
+                  alt="Travel photograph of a harbor city skyline during golden hour"
+                  fill
+                  className="essay-image"
+                  sizes="(max-width: 1100px) 100vw, 24vw"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="journey-grid">
+            {journeyFrames.map((frame) => (
+              <article key={frame.title} className="journey-frame">
+                <div className="journey-frame-image">
+                  <Image
+                    src={frame.image}
+                    alt={frame.alt}
+                    fill
+                    className="journey-image"
+                    sizes="(max-width: 960px) 100vw, 33vw"
+                  />
+                </div>
+                <div className="journey-frame-copy">
+                  <strong>{frame.title}</strong>
+                  <p>{frame.note}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>

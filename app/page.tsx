@@ -86,7 +86,7 @@ export default async function HomePage() {
             </article>
             <article className="editorial-note">
               <strong>Admin-led publishing</strong>
-              <p>The write flow is locked behind Supabase auth so only approved editors can publish.</p>
+              <p>Only approved editors can access the publishing flow and add new stories.</p>
             </article>
           </div>
         </div>

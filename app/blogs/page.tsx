@@ -47,7 +47,7 @@ export default async function BlogsPage() {
           ) : (
             <div className="empty-state">
               <h3>No blogs found</h3>
-              <p>Your Supabase table is connected, but it does not have any published stories yet.</p>
+              <p>There are no published stories yet.</p>
             </div>
           )}
         </div>

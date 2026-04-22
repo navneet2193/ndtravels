@@ -23,8 +23,8 @@ export const metadata: Metadata = {
     template: "%s | ND Travels"
   },
   description:
-    "A modern travel blog built with Next.js and Supabase for discovering stories, guides, and memorable escapes.",
-  keywords: ["travel blog", "Next.js", "Supabase", "travel stories", "adventure journal"],
+    "A travel journal for discovering stories, guides, and memorable escapes.",
+  keywords: ["travel blog", "travel stories", "adventure journal", "destination guides"],
   openGraph: {
     title: "ND Travels",
     description: "Travel stories, destination guides, and visual inspiration for your next trip.",

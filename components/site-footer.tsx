@@ -10,7 +10,7 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="footer-links">
-          <p className="footer-note">Built with Next.js and Supabase.</p>
+          <p className="footer-note">Stories, guides, and memorable routes.</p>
           <p className="footer-note">Write beautifully. Publish deliberately.</p>
         </div>
       </div>

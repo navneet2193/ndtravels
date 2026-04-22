@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { logoutAdminAction } from "@/app/create/actions";
 
 export async function SiteHeader() {
   const isAdmin = await isAdminAuthenticated();
@@ -15,11 +16,20 @@ export async function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="nav" aria-label="Primary">
-          <Link href="/">Home</Link>
-          <Link href="/blogs">Blogs</Link>
-          <Link href="/create">{isAdmin ? "Create Blog" : "Admin Login"}</Link>
-        </nav>
+        <div className="nav-actions">
+          <nav className="nav" aria-label="Primary">
+            <Link href="/">Home</Link>
+            <Link href="/blogs">Blogs</Link>
+            <Link href="/create">{isAdmin ? "Write" : "Sign in"}</Link>
+          </nav>
+          {isAdmin ? (
+            <form action={logoutAdminAction}>
+              <button className="button button-secondary nav-signout" type="submit">
+                Sign out
+              </button>
+            </form>
+          ) : null}
+        </div>
       </div>
     </header>
   );

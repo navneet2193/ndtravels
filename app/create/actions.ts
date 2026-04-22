@@ -67,7 +67,7 @@ export async function loginAdminAction(
 
 export async function logoutAdminAction() {
   await clearAdminSession();
-  redirect("/create");
+  redirect("/");
 }
 
 export async function createBlogAction(

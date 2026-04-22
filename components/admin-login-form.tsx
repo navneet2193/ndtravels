@@ -13,7 +13,7 @@ function SubmitButton() {
 
   return (
     <button className="button button-primary" type="submit" disabled={pending}>
-      {pending ? "Signing in..." : "Admin sign in"}
+      {pending ? "Signing in..." : "Sign in"}
     </button>
   );
 }
@@ -24,22 +24,19 @@ export function AdminLoginForm() {
   return (
     <div className="form-card auth-card">
       <div className="auth-card-intro">
-        <p className="eyebrow">Secure Access</p>
-        <h2>Enter the editorial dashboard</h2>
-        <p className="helper-text">
-          Sign in with Supabase Auth. Access is granted only if your profile role is set to
-          `admin`.
-        </p>
+        <p className="eyebrow">Welcome Back</p>
+        <h2>Sign in to continue</h2>
+        <p className="helper-text">Enter your account details to access the publishing area.</p>
       </div>
 
       <form className="form-grid" action={formAction}>
         <div className="field">
-          <label htmlFor="email">Admin Email</label>
-          <input id="email" name="email" type="email" placeholder="admin@example.com" required />
+          <label htmlFor="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="name@example.com" required />
         </div>
 
         <div className="field">
-          <label htmlFor="password">Admin Password</label>
+          <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" required />
         </div>
 

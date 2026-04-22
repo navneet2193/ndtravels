@@ -163,6 +163,12 @@ p {
   gap: 0.65rem;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
 .nav a {
   padding: 0.8rem 1.1rem;
   border-radius: 999px;
@@ -179,6 +185,12 @@ p {
   background: rgba(199, 107, 62, 0.12);
   color: var(--text);
   transform: translateY(-1px);
+}
+
+.nav-signout {
+  min-height: 2.85rem;
+  padding: 0.7rem 1rem;
+  box-shadow: none;
 }
 
 .hero {
@@ -601,6 +613,32 @@ p {
   width: min(calc(100% - 2.5rem), 1240px);
 }
 
+.create-shell {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.create-page-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.create-page-header h1 {
+  font-size: clamp(2.7rem, 5vw, 4.5rem);
+  max-width: 12ch;
+}
+
+.create-page-header .section-copy {
+  max-width: 58ch;
+  margin-top: 0.9rem;
+}
+
+.create-form-shell {
+  width: min(100%, 1020px);
+}
+
 .create-intro-card {
   display: grid;
   gap: 1.2rem;
@@ -676,6 +714,7 @@ p {
 .form-three-column {
   display: grid;
   gap: 1rem;
+  align-items: start;
 }
 
 .form-two-column {
@@ -688,11 +727,13 @@ p {
 
 .field {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.5rem;
+  align-content: start;
 }
 
 .field label {
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .field input,
@@ -705,16 +746,28 @@ p {
   color: var(--text);
   font: inherit;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.field input {
+  min-height: 3.55rem;
 }
 
 .field input:focus,
 .field textarea:focus {
   outline: 2px solid rgba(199, 107, 62, 0.22);
   border-color: rgba(199, 107, 62, 0.38);
+  box-shadow:
+    0 0 0 4px rgba(199, 107, 62, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
 }
 
 .field textarea {
   min-height: 170px;
+  padding-top: 1rem;
   resize: vertical;
 }
 
@@ -800,10 +853,17 @@ p {
   }
 
   .listing-hero,
+  .create-page-header,
   .section-heading,
   .header-inner,
   .footer-inner,
   .editor-actions {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .nav-actions {
+    width: 100%;
     align-items: start;
     flex-direction: column;
   }
@@ -828,6 +888,10 @@ p {
 
   .create-section .container {
     width: min(calc(100% - 1rem), 1240px);
+  }
+
+  .create-page-header h1 {
+    font-size: clamp(2.3rem, 10vw, 3.5rem);
   }
 
   .nav {

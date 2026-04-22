@@ -14,7 +14,8 @@ export default function CreateBlogPage() {
           <p className="eyebrow">Create Blog</p>
           <h1>Publish your next travel story</h1>
           <p className="section-copy">
-            Add a title, full content, and image URL to publish a clean, readable travel post.
+            Fill in your blog details, media links, SEO text, and travel metadata to match your
+            Supabase `blogs` table.
           </p>
         </div>
 

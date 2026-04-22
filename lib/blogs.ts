@@ -2,18 +2,56 @@ import { cache } from "react";
 import { createSupabaseServerClient } from "@/lib/supabase";
 import type { Blog } from "@/lib/types";
 
-function fallbackExcerpt(content: string) {
-  return content.replace(/\s+/g, " ").trim().slice(0, 160);
+type BlogRow = {
+  id: string;
+  title?: string | null;
+  slug?: string | null;
+  description?: string | null;
+  content?: string | null;
+  location?: string | null;
+  date?: string | null;
+  category?: string | null;
+  tags?: string[] | null;
+  seo_description?: string | null;
+  featured_image?: string | null;
+  images?: string[] | null;
+  videos?: string[] | null;
+  likes?: number | null;
+  created_at?: string | null;
+  updated_at?: string | null;
+};
+
+function buildPreviewText(blog: BlogRow) {
+  return (
+    blog.description ||
+    blog.seo_description ||
+    blog.content ||
+    ""
+  )
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 160);
 }
 
-function normalizeBlog(blog: Partial<Blog> & { id: string }): Blog {
+function normalizeBlog(blog: BlogRow): Blog {
   return {
     id: blog.id,
+    slug: blog.slug || "",
     title: blog.title || "Untitled journey",
+    description: blog.description || "",
+    excerpt: buildPreviewText(blog),
     content: blog.content || "",
-    image_url: blog.image_url || "",
-    excerpt: blog.excerpt || fallbackExcerpt(blog.content || ""),
-    created_at: blog.created_at || new Date().toISOString()
+    location: blog.location || "",
+    date: blog.date || "",
+    category: blog.category || "",
+    tags: blog.tags || [],
+    seo_description: blog.seo_description || "",
+    image_url: blog.featured_image || "",
+    images: blog.images || [],
+    videos: blog.videos || [],
+    likes: blog.likes || 0,
+    created_at: blog.created_at || new Date().toISOString(),
+    updated_at: blog.updated_at || blog.created_at || new Date().toISOString()
   };
 }
 
@@ -29,7 +67,9 @@ export const getAllBlogs = cache(async (): Promise<Blog[]> => {
 
   const { data, error } = await supabase
     .from("blogs")
-    .select("id, title, excerpt, content, image_url, created_at")
+    .select(
+      "id, title, slug, description, content, location, date, category, tags, seo_description, featured_image, images, videos, likes, created_at, updated_at"
+    )
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -52,7 +92,9 @@ export const getFeaturedBlogs = cache(async (limit = 3): Promise<Blog[]> => {
 
   const { data, error } = await supabase
     .from("blogs")
-    .select("id, title, excerpt, content, image_url, created_at")
+    .select(
+      "id, title, slug, description, content, location, date, category, tags, seo_description, featured_image, images, videos, likes, created_at, updated_at"
+    )
     .order("created_at", { ascending: false })
     .limit(limit);
 
@@ -76,7 +118,9 @@ export const getBlogById = cache(async (id: string): Promise<Blog | null> => {
 
   const { data, error } = await supabase
     .from("blogs")
-    .select("id, title, excerpt, content, image_url, created_at")
+    .select(
+      "id, title, slug, description, content, location, date, category, tags, seo_description, featured_image, images, videos, likes, created_at, updated_at"
+    )
     .eq("id", id)
     .single();
 

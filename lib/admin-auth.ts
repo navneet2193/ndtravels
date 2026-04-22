@@ -91,6 +91,19 @@ export async function verifyAdminCredentials(email: string, password: string) {
 
 export async function getAuthenticatedAdminEmail() {
   try {
+    const admin = await getAuthenticatedAdmin();
+    return admin?.email ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function isAdminAuthenticated() {
+  return Boolean(await getAuthenticatedAdminEmail());
+}
+
+export async function getAuthenticatedAdmin() {
+  try {
     const cookieStore = await cookies();
     const sessionValue = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
 
@@ -111,14 +124,18 @@ export async function getAuthenticatedAdminEmail() {
     }
 
     const admin = await getActiveAdmin(parsedValue.userId);
-    return admin ? parsedValue.email : null;
+
+    if (!admin) {
+      return null;
+    }
+
+    return {
+      id: parsedValue.userId,
+      email: parsedValue.email
+    };
   } catch {
     return null;
   }
-}
-
-export async function isAdminAuthenticated() {
-  return Boolean(await getAuthenticatedAdminEmail());
 }
 
 export async function createAdminSession(userId: string, email: string) {

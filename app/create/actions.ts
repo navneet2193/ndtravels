@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import {
   clearAdminSession,
   createAdminSession,
+  getAuthenticatedAdmin,
   isAdminAuthenticated,
   verifyAdminCredentials
 } from "@/lib/admin-auth";
@@ -104,6 +105,14 @@ export async function createBlogAction(
     };
   }
 
+  const admin = await getAuthenticatedAdmin();
+
+  if (!admin?.id) {
+    return {
+      error: "Admin login required before publishing."
+    };
+  }
+
   let supabase;
 
   try {
@@ -115,6 +124,7 @@ export async function createBlogAction(
   }
 
   const { error } = await supabase.from("blogs").insert({
+    author_id: admin.id,
     title,
     slug,
     description,

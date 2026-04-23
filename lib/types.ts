@@ -1,5 +1,6 @@
 export type Blog = {
   id: string;
+  author_id: string;
   title: string;
   slug: string;
   excerpt: string;
@@ -14,6 +15,7 @@ export type Blog = {
   images: string[];
   videos: string[];
   likes: number;
+  status: string;
   created_at: string;
   updated_at: string;
 };

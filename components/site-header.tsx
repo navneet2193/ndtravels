@@ -20,6 +20,7 @@ export async function SiteHeader() {
           <nav className="nav" aria-label="Primary">
             <Link href="/">Home</Link>
             <Link href="/blogs">Blogs</Link>
+            <Link href="/my-blogs">View my blogs</Link>
             <Link href="/create">{isAdmin ? "Write" : "Sign in"}</Link>
           </nav>
           {isAdmin ? (

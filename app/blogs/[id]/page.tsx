@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { formatBlogDate, getBlogById } from "@/lib/blogs";
+import { DeleteBlogForm } from "@/components/delete-blog-form";
+import { getAuthenticatedAdmin } from "@/lib/admin-auth";
+import { formatBlogDate, getBlogById, getBlogByIdForAuthor } from "@/lib/blogs";
 
 type BlogDetailPageProps = {
   params: Promise<{
@@ -34,11 +37,14 @@ export async function generateMetadata({
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   const { id } = await params;
-  const blog = await getBlogById(id);
+  const admin = await getAuthenticatedAdmin();
+  const blog = (await getBlogById(id)) || (admin?.id ? await getBlogByIdForAuthor(id, admin.id) : null);
 
   if (!blog) {
     notFound();
   }
+
+  const isOwner = Boolean(admin?.id && blog.author_id === admin.id);
 
   return (
     <article className="section article-section">
@@ -48,6 +54,15 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
             <p className="eyebrow">{blog.category || "Travel Story"}</p>
             <h1>{blog.title}</h1>
             <p className="article-excerpt">{blog.description || blog.excerpt}</p>
+
+            {isOwner ? (
+              <div className="owner-actions">
+                <Link className="button button-secondary" href={`/blogs/${blog.id}/edit`}>
+                  Edit story
+                </Link>
+                <DeleteBlogForm blogId={blog.id} />
+              </div>
+            ) : null}
 
             <div className="article-meta-row">
               <span>Published {formatBlogDate(blog.created_at)}</span>

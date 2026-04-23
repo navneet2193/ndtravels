@@ -272,6 +272,12 @@ p {
   border: 1px solid rgba(8, 119, 131, 0.2);
 }
 
+.button-danger {
+  background: #9a351d;
+  color: white;
+  box-shadow: var(--shadow-soft);
+}
+
 .hero-feature-frame,
 .metric-card,
 .editorial-note,
@@ -813,6 +819,122 @@ p {
   font-size: 1.55rem;
 }
 
+.dashboard-section {
+  display: grid;
+  gap: 1rem;
+}
+
+.dashboard-page-section {
+  padding-top: 3rem;
+}
+
+.dashboard-shell {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.dashboard-hero {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.dashboard-hero h1 {
+  max-width: 12ch;
+}
+
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.my-blogs-table-wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.my-blogs-table {
+  width: 100%;
+  min-width: 880px;
+  border-collapse: collapse;
+}
+
+.my-blogs-table th,
+.my-blogs-table td {
+  padding: 1.1rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(20, 32, 40, 0.08);
+  vertical-align: middle;
+}
+
+.my-blogs-table th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.my-blogs-table td:first-child {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.my-blogs-table td:first-child span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.my-blogs-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(8, 119, 131, 0.12);
+  color: var(--teal);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.status-pill-draft {
+  background: rgba(255, 200, 87, 0.28);
+  color: #835b00;
+}
+
+.status-pill-published {
+  background: rgba(8, 119, 131, 0.12);
+  color: var(--teal);
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.table-button,
+.table-actions .button-danger {
+  min-height: 2.55rem;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.86rem;
+}
+
+.table-actions .owner-delete-form {
+  display: contents;
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -894,6 +1016,18 @@ p {
   flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1.4rem;
+}
+
+.owner-actions,
+.owner-delete-form {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.owner-actions {
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
 }
 
 .article-tags {
@@ -1290,6 +1424,7 @@ p {
 @media (max-width: 960px) {
   .hero-metrics,
   .archive-toolbar,
+  .dashboard-stats-grid,
   .form-three-column,
   .form-two-column,
   .card-grid,
@@ -1301,11 +1436,14 @@ p {
   }
 
   .listing-hero,
+  .dashboard-hero,
   .create-page-header,
   .section-heading,
   .header-inner,
   .footer-inner,
-  .editor-actions {
+  .editor-actions,
+  .owner-actions,
+  .owner-delete-form {
     align-items: start;
     flex-direction: column;
   }

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { AdminLoginForm } from "@/components/admin-login-form";
 import { CreateBlogForm } from "@/components/create-blog-form";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
-import { logoutAdminAction } from "./actions";
 
 export const metadata: Metadata = {
   title: "Write",
@@ -25,6 +25,11 @@ export default async function CreateBlogPage() {
                 : "Sign in to continue to the publishing area."}
             </p>
           </div>
+          {isAdmin ? (
+            <Link className="button button-secondary" href="/my-blogs">
+              View my blogs
+            </Link>
+          ) : null}
         </div>
 
         <div className="create-form-shell">{isAdmin ? <CreateBlogForm /> : <AdminLoginForm />}</div>

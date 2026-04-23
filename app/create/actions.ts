@@ -15,6 +15,18 @@ export type CreateBlogState = {
   error: string;
 };
 
+export type UpdateBlogState = {
+  error: string;
+};
+
+export type DeleteBlogState = {
+  error: string;
+};
+
+export type PublishBlogState = {
+  error: string;
+};
+
 export type AdminLoginState = {
   error: string;
 };
@@ -136,7 +148,8 @@ export async function createBlogAction(
     seo_description: seoDescription,
     featured_image: featuredImage,
     images,
-    videos
+    videos,
+    status: "published"
   });
 
   if (error) {
@@ -147,5 +160,224 @@ export async function createBlogAction(
 
   revalidatePath("/");
   revalidatePath("/blogs");
+  redirect("/blogs");
+}
+
+export async function updateBlogAction(
+  _prevState: UpdateBlogState,
+  formData: FormData
+): Promise<UpdateBlogState> {
+  const admin = await getAuthenticatedAdmin();
+
+  if (!admin?.id) {
+    return {
+      error: "Admin login required before updating this blog."
+    };
+  }
+
+  const blogId = String(formData.get("blogId") || "").trim();
+  const title = String(formData.get("title") || "").trim();
+  const slugInput = String(formData.get("slug") || "").trim();
+  const description = String(formData.get("description") || "").trim();
+  const content = String(formData.get("content") || "").trim();
+  const location = String(formData.get("location") || "").trim();
+  const travelDate = String(formData.get("date") || "").trim();
+  const category = String(formData.get("category") || "").trim();
+  const tagsInput = String(formData.get("tags") || "").trim();
+  const seoDescription = String(formData.get("seoDescription") || "").trim();
+  const featuredImage = String(formData.get("featuredImage") || "").trim();
+  const imagesInput = String(formData.get("images") || "").trim();
+  const videosInput = String(formData.get("videos") || "").trim();
+
+  const slug = slugInput || slugify(title);
+  const tags = parseListField(tagsInput);
+  const images = parseListField(imagesInput);
+  const videos = parseListField(videosInput);
+
+  if (!blogId) {
+    return {
+      error: "Missing blog id."
+    };
+  }
+
+  if (!title || !slug || !description || !content || !location || !travelDate || !category) {
+    return {
+      error: "Title, slug, description, content, location, travel date, and category are required."
+    };
+  }
+
+  let supabase;
+
+  try {
+    supabase = createSupabaseAdminClient();
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Supabase is not configured."
+    };
+  }
+
+  const { data: existingBlog, error: lookupError } = await supabase
+    .from("blogs")
+    .select("id")
+    .eq("id", blogId)
+    .eq("author_id", admin.id)
+    .maybeSingle();
+
+  if (lookupError) {
+    return {
+      error: lookupError.message
+    };
+  }
+
+  if (!existingBlog) {
+    return {
+      error: "You can only update blogs you created."
+    };
+  }
+
+  const { error } = await supabase
+    .from("blogs")
+    .update({
+      title,
+      slug,
+      description,
+      content,
+      location,
+      date: travelDate,
+      category,
+      tags,
+      seo_description: seoDescription,
+      featured_image: featuredImage,
+      images,
+      videos,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", blogId)
+    .eq("author_id", admin.id);
+
+  if (error) {
+    return {
+      error: error.message
+    };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/blogs");
+  revalidatePath("/my-blogs");
+  revalidatePath(`/blogs/${blogId}`);
+  revalidatePath(`/blogs/${blogId}/edit`);
+  redirect(`/blogs/${blogId}`);
+}
+
+export async function publishBlogAction(
+  _prevState: PublishBlogState,
+  formData: FormData
+): Promise<PublishBlogState> {
+  const admin = await getAuthenticatedAdmin();
+
+  if (!admin?.id) {
+    return {
+      error: "Admin login required before publishing this blog."
+    };
+  }
+
+  const blogId = String(formData.get("blogId") || "").trim();
+
+  if (!blogId) {
+    return {
+      error: "Missing blog id."
+    };
+  }
+
+  let supabase;
+
+  try {
+    supabase = createSupabaseAdminClient();
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Supabase is not configured."
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("blogs")
+    .update({
+      status: "published",
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", blogId)
+    .eq("author_id", admin.id)
+    .select("id");
+
+  if (error) {
+    return {
+      error: error.message
+    };
+  }
+
+  if (!data?.length) {
+    return {
+      error: "You can only publish blogs you created."
+    };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/blogs");
+  revalidatePath("/my-blogs");
+  revalidatePath(`/blogs/${blogId}`);
+  redirect("/my-blogs");
+}
+
+export async function deleteBlogAction(
+  _prevState: DeleteBlogState,
+  formData: FormData
+): Promise<DeleteBlogState> {
+  const admin = await getAuthenticatedAdmin();
+
+  if (!admin?.id) {
+    return {
+      error: "Admin login required before deleting this blog."
+    };
+  }
+
+  const blogId = String(formData.get("blogId") || "").trim();
+
+  if (!blogId) {
+    return {
+      error: "Missing blog id."
+    };
+  }
+
+  let supabase;
+
+  try {
+    supabase = createSupabaseAdminClient();
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Supabase is not configured."
+    };
+  }
+
+  const { error, count } = await supabase
+    .from("blogs")
+    .delete({ count: "exact" })
+    .eq("id", blogId)
+    .eq("author_id", admin.id);
+
+  if (error) {
+    return {
+      error: error.message
+    };
+  }
+
+  if (!count) {
+    return {
+      error: "You can only delete blogs you created."
+    };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/blogs");
+  revalidatePath(`/blogs/${blogId}`);
   redirect("/blogs");
 }

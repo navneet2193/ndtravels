@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { createSupabaseAdminClient, createSupabaseServerClient } from "@/lib/supabase";
+import { createSupabaseAdminClient } from "@/lib/supabase";
 import type { Blog } from "@/lib/types";
 
 type BlogRow = {
@@ -66,7 +66,7 @@ export const getAllBlogs = cache(async (): Promise<Blog[]> => {
   let supabase;
 
   try {
-    supabase = createSupabaseServerClient();
+    supabase = createSupabaseAdminClient();
   } catch (error) {
     console.error("Supabase configuration error:", error);
     return [];
@@ -75,6 +75,7 @@ export const getAllBlogs = cache(async (): Promise<Blog[]> => {
   const { data, error } = await supabase
     .from("blogs")
     .select(BLOG_SELECT)
+    .eq("status", "published")
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -89,7 +90,7 @@ export const getFeaturedBlogs = cache(async (limit = 3): Promise<Blog[]> => {
   let supabase;
 
   try {
-    supabase = createSupabaseServerClient();
+    supabase = createSupabaseAdminClient();
   } catch (error) {
     console.error("Supabase configuration error:", error);
     return [];
@@ -98,6 +99,7 @@ export const getFeaturedBlogs = cache(async (limit = 3): Promise<Blog[]> => {
   const { data, error } = await supabase
     .from("blogs")
     .select(BLOG_SELECT)
+    .eq("status", "published")
     .order("created_at", { ascending: false })
     .limit(limit);
 
@@ -113,7 +115,7 @@ export const getBlogById = cache(async (id: string): Promise<Blog | null> => {
   let supabase;
 
   try {
-    supabase = createSupabaseServerClient();
+    supabase = createSupabaseAdminClient();
   } catch (error) {
     console.error("Supabase configuration error:", error);
     return null;
@@ -123,6 +125,7 @@ export const getBlogById = cache(async (id: string): Promise<Blog | null> => {
     .from("blogs")
     .select(BLOG_SELECT)
     .eq("id", id)
+    .eq("status", "published")
     .single();
 
   if (error) {

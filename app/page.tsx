@@ -51,6 +51,33 @@ const journeyFrames = [
   }
 ];
 
+const motionRailImages = [
+  {
+    src: "/home-images/coast-hero.jpg",
+    alt: "Coastal cliffs and ocean waves"
+  },
+  {
+    src: "/home-images/mountain-road.jpg",
+    alt: "Road through dramatic mountain landscape"
+  },
+  {
+    src: "/home-images/city-skyline.jpg",
+    alt: "City skyline by the water"
+  },
+  {
+    src: "/home-images/harbor-city.jpg",
+    alt: "Harbor city view during golden hour"
+  },
+  {
+    src: "/home-images/mountain-aerial-road.jpg",
+    alt: "Aerial mountain road travel photograph"
+  },
+  {
+    src: "/home-images/coast-aerial.jpg",
+    alt: "Aerial coastline travel photograph"
+  }
+];
+
 export default async function HomePage() {
   const featuredBlogs = await getFeaturedBlogs(3);
   const heroBlog = featuredBlogs[0];
@@ -161,6 +188,31 @@ export default async function HomePage() {
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="section section-tight motion-gallery-section">
+        <div className="motion-gallery-heading">
+          <p className="eyebrow">Moving Postcards</p>
+          <h2>Coasts, cities, and mountain roads in motion.</h2>
+        </div>
+        <div className="motion-rail motion-rail-left" aria-hidden="true">
+          <div className="motion-rail-track">
+            {[...motionRailImages, ...motionRailImages].map((image, index) => (
+              <div className="motion-rail-card" key={`left-${image.src}-${index}`}>
+                <Image src={image.src} alt={image.alt} fill className="motion-rail-image" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="motion-rail motion-rail-right" aria-hidden="true">
+          <div className="motion-rail-track">
+            {[...motionRailImages].reverse().concat([...motionRailImages].reverse()).map((image, index) => (
+              <div className="motion-rail-card motion-rail-card-small" key={`right-${image.src}-${index}`}>
+                <Image src={image.src} alt={image.alt} fill className="motion-rail-image" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

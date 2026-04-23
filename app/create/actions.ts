@@ -23,7 +23,7 @@ export type DeleteBlogState = {
   error: string;
 };
 
-export type PublishBlogState = {
+export type UpdateBlogStatusState = {
   error: string;
 };
 
@@ -269,23 +269,30 @@ export async function updateBlogAction(
   redirect(`/blogs/${blogId}`);
 }
 
-export async function publishBlogAction(
-  _prevState: PublishBlogState,
+export async function updateBlogStatusAction(
+  _prevState: UpdateBlogStatusState,
   formData: FormData
-): Promise<PublishBlogState> {
+): Promise<UpdateBlogStatusState> {
   const admin = await getAuthenticatedAdmin();
 
   if (!admin?.id) {
     return {
-      error: "Admin login required before publishing this blog."
+      error: "Admin login required before changing this blog status."
     };
   }
 
   const blogId = String(formData.get("blogId") || "").trim();
+  const status = String(formData.get("status") || "").trim();
 
   if (!blogId) {
     return {
       error: "Missing blog id."
+    };
+  }
+
+  if (status !== "draft" && status !== "published") {
+    return {
+      error: "Invalid blog status."
     };
   }
 
@@ -302,7 +309,7 @@ export async function publishBlogAction(
   const { data, error } = await supabase
     .from("blogs")
     .update({
-      status: "published",
+      status,
       updated_at: new Date().toISOString()
     })
     .eq("id", blogId)
@@ -317,7 +324,7 @@ export async function publishBlogAction(
 
   if (!data?.length) {
     return {
-      error: "You can only publish blogs you created."
+      error: "You can only change blogs you created."
     };
   }
 

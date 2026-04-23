@@ -55,7 +55,7 @@ export function MyBlogsTable({ blogs }: MyBlogsTableProps) {
                   <Link className="button button-secondary table-button" href={`/blogs/${blog.id}/edit`}>
                     Edit
                   </Link>
-                  {blog.status === "draft" ? <PublishBlogForm blogId={blog.id} /> : null}
+                  <PublishBlogForm blogId={blog.id} currentStatus={blog.status || "published"} />
                   <DeleteBlogForm blogId={blog.id} />
                 </div>
               </td>
